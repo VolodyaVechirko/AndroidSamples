@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_users">
+
+    <fragment
+        android:id="@+id/navigation_users"
+        android:name="com.example.album.ui.home.HomeFragment"
+        android:label="@string/title_users"
+        tools:layout="@layout/activity_users" />
+
+    <fragment
+        android:id="@+id/navigation_posts"
+        android:name="com.example.album.ui.posts.PostsFragment"
+        android:label="@string/title_posts"
+        tools:layout="@layout/activity_posts">
+        <argument
+            android:name="userId"
+            android:defaultValue="null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_albums"
+        android:name="com.example.album.ui.album.AlbumsFragment"
+        android:label="@string/title_albums"
+        tools:layout="@layout/activity_albums">
+        <argument
+            android:name="userId"
+            android:defaultValue="null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <action
+        android:id="@+id/toUserPosts"
+        app:destination="@+id/navigation_posts" />
+
+    <action
+        android:id="@+id/toUser"
+        app:destination="@+id/navigation_users" />
+</navigation>

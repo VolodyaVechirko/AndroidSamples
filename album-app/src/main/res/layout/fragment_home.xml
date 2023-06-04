@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#888"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/text_home"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="36dp"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+    <com.example.album.ui.home.OverlayView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        app:fillFrame="true"
+        app:backgroundColor="#000"
+        app:cornerRadius="16dp"
+        app:frameColor="#FFF"
+        app:frameWidth="3dp"
+        app:targetView="@id/text_home" />
+</FrameLayout>
