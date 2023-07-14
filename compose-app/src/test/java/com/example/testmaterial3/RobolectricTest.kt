@@ -59,6 +59,11 @@ class RobolectricTest {
 
             val fab = it.findViewById<FloatingActionButton>(TestR.id.fab)
             assertThat(fab.contentDescription.toString(), equalTo("TestMaterial3"))
+
+            fab.performClick()
+            val actual = shadowOf(RuntimeEnvironment.getApplication()).nextStartedActivity
+            assertEquals(Intent.ACTION_VIEW, actual.action)
+            assert(actual.data.toString().contains("facebook"))
         }
     }
 }
