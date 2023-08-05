@@ -16,3 +16,4 @@ rootProject.name = "TestProject"
 include ':compose-app'
 include ':webtest-app'
 include ':album-app'
+include ':camerax'
