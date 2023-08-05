@@ -3,7 +3,6 @@ package com.vvechirko.camerax
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -29,14 +28,13 @@ sealed class Screen(
     @StringRes val textRes: Int,
     @DrawableRes val iconRes: Int
 ) {
-    object Home : Screen("Home", R.string.title_home, R.drawable.ic_home)
-    object Camera : Screen("Camera", R.string.title_camera, R.drawable.ic_camera)
-    object Friends : Screen("Friends", R.string.title_friends, R.drawable.ic_friends)
-    object More : Screen("More", R.string.title_more, R.drawable.ic_person)
+    data object Home : Screen("Home", R.string.title_home, R.drawable.ic_home)
+    data object Camera : Screen("Camera", R.string.title_camera, R.drawable.ic_camera)
+    data object Friends : Screen("Friends", R.string.title_friends, R.drawable.ic_friends)
+    data object More : Screen("More", R.string.title_more, R.drawable.ic_person)
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
