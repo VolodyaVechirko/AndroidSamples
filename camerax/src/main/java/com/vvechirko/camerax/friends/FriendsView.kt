@@ -3,6 +3,7 @@ package com.vvechirko.camerax.friends
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,7 +30,7 @@ fun FriendsView(
 //    viewModel: SearchViewModel = remember { SearchViewModel() }
     viewModel: SearchViewModel = viewModel()
 ) {
-    Column {
+    Column(modifier = Modifier.fillMaxSize()) {
         SearchView(
             text = viewModel.query,
             placeholder = "Search",
@@ -73,12 +75,12 @@ fun ListItem(text: String, onItemClicked: (String) -> Unit) {
     )
 }
 
-@Preview(name = "Light Mode")
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
-    name = "Dark Mode"
-)
+@Preview(name = "Light Mode", device = Devices.PIXEL_3)
+//@Preview(
+//    uiMode = Configuration.UI_MODE_NIGHT_YES,
+//    showBackground = true,
+//    name = "Dark Mode"
+//)
 @Composable
 fun PreviewPostCard() {
     val vm = SearchViewModel().apply {
