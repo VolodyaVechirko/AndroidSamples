@@ -15,7 +15,7 @@ updates:
     commit-message:
       prefix: "[Dependabot] "
     reviewers:
-      - @VolodyaVechirko
+      - VolodyaVechirko
     open-pull-requests-limit: 10
 
   - package-ecosystem: "github-actions"
