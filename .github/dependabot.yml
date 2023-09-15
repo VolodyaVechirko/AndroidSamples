@@ -12,5 +12,5 @@ updates:
       interval: "daily"
     ignore:
       - dependency-name: "androidx.core:core-ktx:"
-        versions: [ "1.10.x", "1.x.x" ]
+        versions: [ "x.x.x" ]
     open-pull-requests-limit: 10
