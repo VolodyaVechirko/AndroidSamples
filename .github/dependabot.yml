@@ -15,5 +15,5 @@ updates:
         versions: [ "x.x.x-dev" ]
     allow:
       - dependency-name: "androidx.test:core"
-        dependency-type: "prod"
+        dependency-type: "production"
     open-pull-requests-limit: 10
