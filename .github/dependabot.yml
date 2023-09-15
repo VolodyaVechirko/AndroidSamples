@@ -10,16 +10,7 @@ updates:
     target-branch: "main"
     schedule:
       interval: "daily"
-      # Check for updates at 2am UTC
-      time: "02:00"
-    commit-message:
-      prefix: "[Dependabot] "
-    reviewers:
-      - VolodyaVechirko
+    ignore:
+      - dependency-name: "androidx.core:core-ktx:"
+        versions: [ "1.10.x", "1.x.x" ]
     open-pull-requests-limit: 10
-
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
