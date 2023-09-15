@@ -13,4 +13,7 @@ updates:
     ignore:
       - dependency-name: "androidx.core:core-ktx:"
         versions: [ "x.x.x-dev" ]
+    allow:
+      - dependency-name: "androidx.test:core"
+        dependency-type: "prod"
     open-pull-requests-limit: 10
