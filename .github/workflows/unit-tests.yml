@@ -1,0 +1,40 @@
+name: Run Unit Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  unit-tests:
+    timeout-minutes: 30
+
+    runs-on: ${{ inputs.runner }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: set environment
+        uses: ./.github/actions/setup-environment
+        with:
+          runner: ${{ inputs.runner }}
+
+      - name: Run unit tests
+        run: ./gradlew --build-cache test --stacktrace
+
+      - name: Upload all outputs on failure
+        if: failure()
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: outputs_unittests_${{ inputs.runner }}
+          path: |
+            app/build/outputs/*
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: test-report_unittests
+          path: |
+            app/build/reports/*
