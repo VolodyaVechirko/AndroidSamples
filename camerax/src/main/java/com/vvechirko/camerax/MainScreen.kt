@@ -30,12 +30,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.vvechirko.camerax.camera.CameraView
-import com.vvechirko.camerax.friends.FriendsView
+import com.vvechirko.camerax.camera.CameraScreen
+import com.vvechirko.camerax.friends.FriendsScreen
 import com.vvechirko.camerax.home.HomeScreen
 import com.vvechirko.camerax.home.PostFullScreen
 import com.vvechirko.camerax.home.getPhoto
-import com.vvechirko.camerax.more.MoreView
+import com.vvechirko.camerax.more.EndlessScrollScreen
+import com.vvechirko.camerax.more.MoreScreen
+import com.vvechirko.camerax.more.SettingsScreen
+import com.vvechirko.camerax.more.StickyHeaderScreen
 
 sealed class Screen(
     val route: String,
@@ -60,7 +63,7 @@ fun MainScreen() {
         Screen.More
     )
     Scaffold(
-        topBar = { AppBar(title = "My Universe") },
+        topBar = { AppBar(title = "My Universe", navController) },
         bottomBar = { BottomNavigation(navController, bottomNavigationItems) },
     ) { padding ->
         NavBarConfig(navController, modifier = Modifier.padding(padding))
@@ -85,13 +88,13 @@ private fun NavBarConfig(
             })
         }
         composable(Route.CAMERA) {
-            CameraView()
+            CameraScreen()
         }
         composable(Route.FRIENDS) {
-            FriendsView()
+            FriendsScreen()
         }
         composable(Route.MORE) {
-            MoreView()
+            MoreScreen(navController)
         }
 
         composable(
@@ -103,19 +106,31 @@ private fun NavBarConfig(
             val postId = it.arguments?.getString(Route.ARG_POST_ID)!!
             PostFullScreen(photo = getPhoto(LocalContext.current, postId))
         }
+
+        composable(Route.SETTINGS) {
+            SettingsScreen()
+        }
+
+        composable(Route.STICKY_HEADER) {
+            StickyHeaderScreen()
+        }
+
+        composable(Route.ENDLESS_SCROLL) {
+            EndlessScrollScreen()
+        }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AppBar(title: String) {
+private fun AppBar(title: String, navController: NavHostController) {
     TopAppBar(
         title = { Text(text = title) },
         actions = {
-            IconButton(onClick = { }) {
+            IconButton(onClick = { navController.navigate(Route.STICKY_HEADER) }) {
                 Icon(Icons.Filled.Share, null)
             }
-            IconButton(onClick = { }) {
+            IconButton(onClick = { navController.navigate(Route.ENDLESS_SCROLL) }) {
                 Icon(Icons.Filled.Settings, null)
             }
         }
@@ -127,18 +142,18 @@ private fun BottomNavigation(
     navController: NavHostController,
     items: List<Screen>
 ) {
-    NavigationBar(containerColor = MaterialTheme.colorScheme.secondaryContainer) {
+    NavigationBar(containerColor = MaterialTheme.colorScheme.inverseOnSurface) {
         val currentRoute = navController.currentRoute()
         items.forEach { screen ->
             NavigationBarItem(
                 icon = { Icon(painterResource(screen.iconRes), contentDescription = null) },
                 label = { Text(stringResource(screen.textRes)) },
-                selected = currentRoute == screen.route,
+                selected = (currentRoute == screen.route),
                 alwaysShowLabel = true,
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                    selectedTextColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                    indicatorColor = MaterialTheme.colorScheme.inversePrimary,
+//                    selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+//                    selectedTextColor = MaterialTheme.colorScheme.onSecondaryContainer,
+//                    indicatorColor = MaterialTheme.colorScheme.inversePrimary,
                     unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
                 ),
@@ -162,11 +177,16 @@ private fun NavHostController.currentRoute(): String? {
 
 object Route {
     const val ROOT = "root"
+
     const val HOME = "nav_home"
     const val CAMERA = "nav_camera"
     const val FRIENDS = "nav_friends"
     const val MORE = "nav_more"
+
     const val FULL_POST = "full_post"
+    const val SETTINGS = "settings"
+    const val STICKY_HEADER = "sticky_headers"
+    const val ENDLESS_SCROLL = "endless_scroll"
 
     const val ARG_POST_ID = "full_post_id"
 }

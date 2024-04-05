@@ -67,7 +67,7 @@ fun HomeScreen(
 //                    color = MaterialTheme.colorScheme.primary,
 //                    currentTabPosition = tabPositions[pagerState.currentPage]
 //                )
-                AnimatedBorderedIndicator(
+                AnimatedDashIndicator(
                     color = MaterialTheme.colorScheme.primary,
                     selectedTabIndex = pagerState.currentPage,
                     tabPositions = tabPositions
@@ -76,7 +76,7 @@ fun HomeScreen(
         ) {
             tabItems.forEachIndexed { index, item ->
                 Tab(
-                    selected = pagerState.currentPage == index,
+                    selected = (pagerState.currentPage == index),
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
 //                    icon = { Icon(imageVector = item, contentDescription = null) },
                     text = { Text(text = item, style = MaterialTheme.typography.titleMedium) },
@@ -89,9 +89,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(4.dp))
         HorizontalPager(pageCount = tabItems.size, state = pagerState) { page ->
             when (page) {
-                0 -> LazyVerticalGrid(
-                    columns = GridCells.Fixed(3)
-                ) {
+                0 -> LazyVerticalGrid(columns = GridCells.Fixed(3)) {
                     items(photos) { photo ->
                         PostGridItem(photo.url, onItemClicked = { onPostClicked(photo.id) })
                     }

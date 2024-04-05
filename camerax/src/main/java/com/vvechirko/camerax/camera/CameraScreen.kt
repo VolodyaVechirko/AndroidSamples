@@ -38,7 +38,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 @Composable
-fun CameraView() {
+fun CameraScreen() {
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
 
     DoOnStop {
@@ -91,32 +91,9 @@ fun CameraPreview(
     Box(contentAlignment = Alignment.BottomCenter, modifier = Modifier.fillMaxSize()) {
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
 
-//        IconButton(
-//            modifier = Modifier.padding(bottom = 20.dp),
-//            onClick = {
-//                imageCapture.takePhoto(
-//                    outputDirectory = outputDirectory,
-//                    executor = executor,
-//                    onImageCaptured = onImageCaptured,
-//                    onError = onError
-//                )
-//            },
-//            content = {
-//                Icon(
-//                    imageVector = Icons.Sharp.Lens,
-//                    contentDescription = "Take picture",
-//                    tint = Color.White,
-//                    modifier = Modifier
-//                        .size(100.dp)
-//                        .padding(1.dp)
-//                        .border(1.dp, Color.White, CircleShape)
-//                )
-//            }
-//        )
-
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed by interactionSource.collectIsPressedAsState()
-        val sizeScale by animateFloatAsState(if (isPressed) 0.7f else 1f)
+        val sizeScale by animateFloatAsState(if (isPressed) 0.8f else 1f)
 
         Button(
             onClick = {
@@ -130,10 +107,7 @@ fun CameraPreview(
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .align(Alignment.BottomCenter)
-                .graphicsLayer(
-                    scaleX = sizeScale,
-                    scaleY = sizeScale
-                ),
+                .graphicsLayer(scaleX = sizeScale, scaleY = sizeScale),
             interactionSource = interactionSource
         ) { Text(text = "Take photo") }
     }

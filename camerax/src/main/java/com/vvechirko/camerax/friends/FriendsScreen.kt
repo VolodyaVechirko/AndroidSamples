@@ -1,6 +1,5 @@
 package com.vvechirko.camerax.friends
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,7 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vvechirko.camerax.ui.AppTheme
 
 @Composable
-fun FriendsView(
+fun FriendsScreen(
 //    viewModel: SearchViewModel = remember { SearchViewModel() }
     viewModel: SearchViewModel = viewModel()
 ) {
@@ -89,7 +88,7 @@ fun PreviewPostCard() {
     }
     AppTheme {
         Surface {
-            FriendsView(vm)
+            FriendsScreen(vm)
         }
     }
 }

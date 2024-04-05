@@ -1,7 +1,6 @@
-@file:Suppress("TransitionPropertiesLabel")
-
 package com.vvechirko.camerax.home
 
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
@@ -10,6 +9,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -31,7 +32,7 @@ fun AnimatedBorderedIndicator(
     selectedTabIndex: Int,
     tabPositions: List<TabPosition>
 ) {
-    val transition = updateTransition(selectedTabIndex)
+    val transition = updateTransition(selectedTabIndex, label = "TabIndicator")
     val indicatorStart by transition.animateDp(
         transitionSpec = {
             // Handle directionality here, if we are moving to the right, we
@@ -42,7 +43,7 @@ fun AnimatedBorderedIndicator(
             } else {
                 spring(dampingRatio = 1f, stiffness = 1000f)
             }
-        }
+        }, label = "TabIndicator"
     ) {
         tabPositions[it].left
     }
@@ -57,7 +58,7 @@ fun AnimatedBorderedIndicator(
             } else {
                 spring(dampingRatio = 1f, stiffness = 50f)
             }
-        }, label = ""
+        }, label = "TabIndicator"
     ) {
         tabPositions[it].right
     }
@@ -81,9 +82,60 @@ fun BorderedIndicator(color: Color, modifier: Modifier = Modifier) {
     // Color is passed in as a parameter [color]
     Box(
         modifier
-            .padding(5.dp)
+            .padding(4.dp)
             .fillMaxSize()
             .border(BorderStroke(2.dp, color), RoundedCornerShape(5.dp))
+    )
+}
+
+
+@Composable
+fun AnimatedDashIndicator(
+    color: Color,
+    selectedTabIndex: Int,
+    tabPositions: List<TabPosition>
+) {
+    val transition = updateTransition(selectedTabIndex, "TabIndicator")
+    val indicatorStart by transition.animateDp(
+        transitionSpec = {
+            val stiffness = if (initialState < targetState) 50f else 500f
+            spring(Spring.DampingRatioNoBouncy, stiffness)
+        }, label = "TabIndicator"
+    ) {
+        tabPositions[it].left
+    }
+
+    val indicatorEnd by transition.animateDp(
+        transitionSpec = {
+            val stiffness = if (initialState < targetState) 500f else 50f
+            spring(Spring.DampingRatioNoBouncy, stiffness)
+        }, label = "TabIndicator"
+    ) {
+        tabPositions[it].right
+    }
+
+    DashIndicator(
+        color,
+        modifier = Modifier
+            // Fill up the entire TabRow, and place the indicator at the start
+            .fillMaxSize()
+            .wrapContentSize(align = Alignment.BottomStart)
+            // Apply an offset from the start to correctly position the indicator around the tab
+            .offset(x = indicatorStart)
+            // Make the width of the indicator follow the animated width as we move between tabs
+            .width(indicatorEnd - indicatorStart)
+    )
+}
+
+
+@Composable
+fun DashIndicator(color: Color, modifier: Modifier = Modifier) {
+    Box(
+        modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .height(3.dp)
+            .background(color = color, shape = RoundedCornerShape(8.dp))
     )
 }
 
