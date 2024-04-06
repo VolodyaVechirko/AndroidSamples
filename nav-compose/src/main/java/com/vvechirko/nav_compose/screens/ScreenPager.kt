@@ -49,13 +49,13 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScreenPager(name: String, onClick: () -> Unit) {
-    val pagerState = rememberPagerState()
-    val coroutineScope = rememberCoroutineScope()
     val tabItems = listOf(
         "Tab 1" to Icons.Rounded.Place,
         "Tab 2" to Icons.Rounded.Search,
         "Tab 3" to Icons.Rounded.Star
     )
+    val pagerState = rememberPagerState(pageCount = { tabItems.size })
+    val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize()) {
         TabRow(
@@ -76,7 +76,7 @@ fun ScreenPager(name: String, onClick: () -> Unit) {
                 )
             }
         }
-        HorizontalPager(pageCount = tabItems.size, state = pagerState) { page ->
+        HorizontalPager(state = pagerState) { page ->
             Box(modifier = Modifier.fillMaxSize()) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
