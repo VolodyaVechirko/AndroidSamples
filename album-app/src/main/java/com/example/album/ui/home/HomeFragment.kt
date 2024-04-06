@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("coop-member-app://ReceiptOverview")
+                    Uri.parse("https://stackoverflow.com")
                 )
             )
         }
