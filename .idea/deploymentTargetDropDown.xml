@@ -5,6 +5,12 @@
       <entry key="camerax">
         <State />
       </entry>
+      <entry key="compose-app">
+        <State />
+      </entry>
+      <entry key="video-app">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
