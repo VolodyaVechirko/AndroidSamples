@@ -1,9 +1,9 @@
-package com.example.webtest.db.room
+package com.example.dbtest.room
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.example.webtest.db.room.BaseDao
-import com.example.webtest.db.room.Post
+import com.example.dbtest.room.BaseDao
+import com.example.dbtest.room.Post
 
 @Dao
 abstract class PostDao : BaseDao<Post>() {

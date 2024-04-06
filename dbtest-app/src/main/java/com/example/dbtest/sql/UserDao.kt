@@ -1,10 +1,4 @@
-package com.example.webtest.db.sql
-
-import androidx.core.database.sqlite.transaction
-import com.example.webviewtest.delete
-import com.example.webviewtest.insertOrIgnore
-import com.example.webviewtest.query
-import com.example.webviewtest.update
+package com.example.dbtest.sql
 
 class UserDao(val helper: DatabaseHelper) {
 
@@ -58,6 +52,15 @@ class UserDao(val helper: DatabaseHelper) {
         return list
     }
 
+    fun replaceFull(users: List<User>) {
+        helper.writableDatabase.use { db ->
+            db.transaction {
+                removeOrphan(users)
+                insertOrUpdate(users)
+            }
+        }
+    }
+
     fun removeOrphan(users: List<User>) {
         val temp = "tempTable"
         helper.writableDatabase.use { db ->
@@ -79,6 +82,10 @@ class UserDao(val helper: DatabaseHelper) {
         helper.writableDatabase.use { db ->
             db.delete(user)
         }
+    }
+
+    fun delete(id: Int) {
+        delete(User(id, "ignored"))
     }
 
     fun deleteAll() {

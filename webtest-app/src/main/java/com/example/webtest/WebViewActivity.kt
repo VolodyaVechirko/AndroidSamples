@@ -1,5 +1,6 @@
 package com.example.webtest
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
@@ -11,37 +12,36 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
+import java.io.BufferedInputStream
 
+/**
+ * Sample of WebView - Java code communication.
+ * 1. Pass url params with [WebView.loadUrl] call.
+ * 2. Pass data via [WebView.evaluateJavascript].
+ * 3. Get web data via [WebView.evaluateJavascript].
+ * 4. Add js functions, callback via [WebView.evaluateJavascript].
+ * 5. Receive callbacks via [AndroidJsBridge].
+ */
 class WebViewActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        ViewCompat.getWindowInsetsController(window.decorView)?.let {
-            it.isAppearanceLightNavigationBars = true
-            it.isAppearanceLightStatusBars = true
-        }
+        val webView = webView()
+        setContentView(webView)
 
-        val insets = ViewCompat.getRootWindowInsets(window.decorView) ?: return
-        val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
-        val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-
-        setContentView(webView())
+        // load url with params
+        val localPath = "file:///android_asset/test.html?param1=ok&param2=encrypted"
+        webView.loadUrl(localPath)
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun webView() = WebView(this).apply {
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
-        webChromeClient = WebChromeClient()
+        webChromeClient = webChromeClient()
         webViewClient = webViewClient()
 
         addJavascriptInterface(JavaScriptInterface(context), "AndroidJsBridge")
-
-        // load url with params
-        loadUrl("file:///android_asset/test.html?param1=ok&param2=encrypted")
     }
 
     private fun webChromeClient() = object : WebChromeClient() {
@@ -80,7 +80,7 @@ class WebViewActivity : Activity() {
 
             // button click event listener
             val script = "document.getElementById('b1').addEventListener('click', function() {" +
-                    "document.getElementById('b1').innerHTML = 'Hacker'; " +
+                    "document.getElementById('b1').innerHTML = 'Toast shown'; " +
                     "window.AndroidJsBridge.log('Button clicked'); " +
                     "});"
             view.evaluateJavascript(script) {
@@ -90,7 +90,7 @@ class WebViewActivity : Activity() {
     }
 
     // provide js bridge to call android
-    class JavaScriptInterface(val context: Context) {
+    class JavaScriptInterface(private val context: Context) {
         @JavascriptInterface
         fun showToast(t: String?) {
             Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
@@ -100,6 +100,15 @@ class WebViewActivity : Activity() {
         fun log(t: String?) {
             Log.d("JsBridge", t.toString())
         }
+    }
+
+    private fun WebView.loadFile(filename: String) {
+        val inputStream = assets.open(filename)
+        val buffer = BufferedInputStream(inputStream)
+        val bytes = buffer.readBytes()
+        val content = String(bytes)
+        buffer.close()
+        loadData(content, "text/html", "utf-8")
     }
 
     private fun log(t: Any?) = Log.d("WebViewTest", t.toString())

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp'
 }
 
 kotlin {
@@ -8,12 +9,12 @@ kotlin {
 }
 
 android {
-    namespace 'com.example.webtest'
+    namespace 'com.example.dbtest'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.webtest"
-        minSdk 26
+        applicationId "com.example.dbtest"
+        minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -23,7 +24,14 @@ android {
 }
 
 dependencies {
+    def roomVersion = '2.6.1'
+    implementation "androidx.room:room-runtime:$roomVersion"
+    ksp "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.11.1'
+    testImplementation 'androidx.test:core-ktx:1.5.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

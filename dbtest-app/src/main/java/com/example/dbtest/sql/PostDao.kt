@@ -1,10 +1,7 @@
-package com.example.webtest.db.sql
+package com.example.dbtest.sql
 
 import android.database.Cursor
 import android.util.Log
-import com.example.webviewtest.delete
-import com.example.webviewtest.insertOrReplace
-import com.example.webviewtest.query
 
 class PostDao(val helper: DatabaseHelper) {
 
@@ -59,6 +56,16 @@ class PostDao(val helper: DatabaseHelper) {
     fun delete(post: Post) {
         helper.writableDatabase.use { db ->
             db.delete(post)
+        }
+    }
+
+    fun delete(id: Int) {
+        delete(Post(id, "ignored", 0))
+    }
+
+    fun deleteAll() {
+        helper.writableDatabase.use { db ->
+            db.delete(Post.TABLE, null, null)
         }
     }
 

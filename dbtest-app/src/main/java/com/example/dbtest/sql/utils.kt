@@ -1,22 +1,7 @@
-package com.example.webviewtest
+package com.example.dbtest.sql
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Color
-import android.util.Log
-import android.view.View
-import android.view.Window
-
-fun Window.fillStatusBar() {
-    this.decorView.systemUiVisibility =
-        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-    this.statusBarColor = Color.TRANSPARENT
-}
-
-fun Any.log(t: Any?) {
-    Log.d(this.javaClass.simpleName, t.toString())
-}
-
 
 // SQLiteDatabase
 interface Identity {
@@ -52,3 +37,16 @@ fun SQLiteDatabase.update(obj: Identity) =
 
 fun SQLiteDatabase.delete(obj: Identity) =
     delete(obj.table, "${Identity.ID} = ${obj.id}", arrayOf())
+
+inline fun <T> SQLiteDatabase.transaction(
+    body: SQLiteDatabase.() -> T
+): T {
+    beginTransaction()
+    try {
+        val result = body()
+        setTransactionSuccessful()
+        return result
+    } finally {
+        endTransaction()
+    }
+}

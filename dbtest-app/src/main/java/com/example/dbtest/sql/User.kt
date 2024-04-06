@@ -1,9 +1,8 @@
-package com.example.webtest.db.sql
+package com.example.dbtest.sql
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.Cursor
-import com.example.webviewtest.Identity
 
 data class User(
     override val id: Int,

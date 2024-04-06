@@ -1,4 +1,4 @@
-package com.example.webtest.db.room
+package com.example.dbtest.room
 
 import androidx.room.Dao
 import androidx.room.Query
@@ -19,8 +19,22 @@ abstract class UserDao : BaseDao<User>() {
     @Query("DELETE FROM users")
     abstract fun deleteAll()
 
+    /**
+     * This method useful when we need to sync local database with data we received
+     * from backend for instance. It updates all records which already exist,
+     * inserts not existing records and removes obsolete ones.
+     *
+     * When we receive a list of [users] to save we will have the situation:
+     * there might be existing records (which need to be updated),
+     * there might be new records (which need to be inserted),
+     * there might be obsolete records (which need to be removed).
+     *
+     * There is a simpler approach how to achieve it. We might just remove all records
+     * and insert new. But this method performs all actions in efficient way. It uses
+     * a helper table to sort out data which need to be removed.
+     */
     @Transaction
-    open fun replaceAll(users: List<User>) {
+    open fun replaceFull(users: List<User>) {
         rawQuery("DROP TABLE IF EXISTS `#temp`")
         rawQuery("CREATE TABLE `#temp` ( id  INTEGER PRIMARY KEY )")
 

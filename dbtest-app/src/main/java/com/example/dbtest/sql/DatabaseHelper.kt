@@ -1,12 +1,26 @@
-package com.example.webtest.db.sql
+package com.example.dbtest.sql
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-class DatabaseHelper(context: Context) :
-    SQLiteOpenHelper(context.applicationContext, DATABASE_NAME, null, DATABASE_VERSION) {
+/**
+ * Creates inMemory database if database name is null
+ */
+class DatabaseHelper(
+    context: Context,
+    inMemory: Boolean = false
+) : SQLiteOpenHelper(
+    context.applicationContext,
+    if (inMemory) null else DATABASE_NAME,
+    null,
+    DATABASE_VERSION
+) {
+
+    val userDao by lazy { UserDao(this) }
+
+    val postDao by lazy { PostDao(this) }
 
     override fun onCreate(db: SQLiteDatabase) {
         try {
@@ -35,7 +49,7 @@ class DatabaseHelper(context: Context) :
 
     companion object {
         private const val TAG = "DatabaseHelper"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "testdb"
     }
 }
