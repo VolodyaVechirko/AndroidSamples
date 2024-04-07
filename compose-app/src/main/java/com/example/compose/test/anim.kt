@@ -1,4 +1,4 @@
-package com.example.compose.old
+package com.example.compose.test
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.animateDp
@@ -6,7 +6,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

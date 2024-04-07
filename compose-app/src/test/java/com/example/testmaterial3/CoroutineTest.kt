@@ -8,8 +8,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class CoroutineTest {
+
+    private val testDispatcher = UnconfinedTestDispatcher()
+
     @Test
-    fun standardTest() = runTest(UnconfinedTestDispatcher()) {
+    fun standardTest() = runTest(testDispatcher) {
         val userRepo = UserRepository()
 
         launch { userRepo.register("Alice") }

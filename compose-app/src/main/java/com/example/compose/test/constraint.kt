@@ -1,14 +1,14 @@
-package com.example.compose.old
+package com.example.compose.test
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,13 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.compose.old.theme.ComposeTestTheme
 import com.example.testmaterial3.R
 
 @Preview(showSystemUi = true, device = Devices.PIXEL_3)
 @Composable
 fun ConstraintLayoutContentPreview() {
-    ComposeTestTheme {
+    MaterialTheme {
         ConstraintLayoutContent()
     }
 }
@@ -52,7 +51,6 @@ fun ConstraintLayoutContent() {
                 top.linkTo(icon1.top)
                 end.linkTo(icon1.start, margin = 16.dp)
                 bottom.linkTo(icon1.bottom)
-
                 width = Dimension.fillToConstraints
             })
 
@@ -60,7 +58,7 @@ fun ConstraintLayoutContent() {
             painter = painterResource(R.drawable.ic_person),
             contentDescription = null,
             contentScale = ContentScale.Inside,
-            colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
             modifier = Modifier
                 .size(48.dp)
                 .constrainAs(icon1) {
@@ -70,7 +68,7 @@ fun ConstraintLayoutContent() {
                 }
         )
 
-        Divider(Modifier.constrainAs(topDivider) {
+        HorizontalDivider(Modifier.constrainAs(topDivider) {
             start.linkTo(parent.start)
             top.linkTo(topGuide)
             end.linkTo(parent.end)
@@ -97,7 +95,7 @@ fun ConstraintLayoutContent() {
             head = "Assist"
         )
 
-        Divider(modifier = Modifier.constrainAs(div1) {
+        HorizontalDivider(modifier = Modifier.constrainAs(div1) {
             start.linkTo(parent.start, margin = 8.dp)
             top.linkTo(param1.bottom, margin = 8.dp)
             end.linkTo(parent.end, margin = 8.dp)
@@ -124,7 +122,7 @@ fun ConstraintLayoutContent() {
             head = "Help"
         )
 
-        Divider(modifier = Modifier.constrainAs(div2) {
+        HorizontalDivider(modifier = Modifier.constrainAs(div2) {
             start.linkTo(parent.start, margin = 8.dp)
             top.linkTo(param3.bottom, margin = 8.dp)
             end.linkTo(parent.end, margin = 8.dp)
@@ -148,7 +146,7 @@ fun DashboardStat(
 
         Text(
             text = head,
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.constrainAs(title) {
                 start.linkTo(parent.start)
                 top.linkTo(parent.top)
@@ -178,7 +176,7 @@ fun DashboardStat(
             }
         )
 
-        Divider(modifier = Modifier.constrainAs(div) {
+        HorizontalDivider(modifier = Modifier.constrainAs(div) {
             start.linkTo(ctr.start)
             top.linkTo(stat.bottom, margin = 8.dp)
             end.linkTo(ph.end)
@@ -231,13 +229,13 @@ fun DashboardStat(
 }
 
 @Composable
-fun StatItemView(param: String, value: String, icon: Int, modifier: Modifier) =
+fun StatItemView(param: String, value: String, icon: Int, modifier: Modifier) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(icon),
             contentDescription = null,
             contentScale = ContentScale.Inside,
-            colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
@@ -247,7 +245,7 @@ fun StatItemView(param: String, value: String, icon: Int, modifier: Modifier) =
                 append(": ")
                 withStyle(
                     style = SpanStyle(
-                        color = MaterialTheme.colors.primary,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Medium
                     )
                 ) {
@@ -256,3 +254,4 @@ fun StatItemView(param: String, value: String, icon: Int, modifier: Modifier) =
             }
         )
     }
+}

@@ -1,9 +1,23 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.TestMaterial3" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
+<resources>
+
+    <style name="Theme.Material3" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 
-    <style name="Theme.TestMaterial3" parent="Base.Theme.TestMaterial3" />
+    <style name="Theme.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.Material3</item>
+
+        <!-- <item name="android:windowSplashScreenBackground">@color/primary</item>-->
+        <!-- <item name="android:windowSplashScreenAnimatedIcon">@drawable/...</item>-->
+        <!-- <item name="android:windowSplashScreenAnimationDuration">1000</item>-->
+        <!-- <item name="android:windowSplashScreenIconBackgroundColor">@color/...</item>-->
+        <!-- <item name="android:windowSplashScreenBrandingImage">@drawable/...</item>-->
+        <!-- <item name="android:windowSplashScreenBehavior">icon_preferred</item>-->
+    </style>
 </resources>

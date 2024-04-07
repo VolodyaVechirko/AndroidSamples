@@ -2,6 +2,7 @@ package com.example.testmaterial3
 
 import android.content.Intent
 import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
 import androidx.test.core.app.ActivityScenario
 import com.example.compose.MainActivity
@@ -60,10 +61,16 @@ class RobolectricTest {
             val fab = it.findViewById<FloatingActionButton>(TestR.id.fab)
             assertThat(fab.contentDescription.toString(), equalTo("TestMaterial3"))
 
-            fab.performClick()
+            RuntimeEnvironment.getMasterScheduler().advanceToLastPostedRunnable()
+            val phoneNumber = "987654321"
+            val editText = it.findViewById<EditText>(TestR.id.phone_text)
+            editText.setText(phoneNumber)
+
+            val buttonCall = it.findViewById<Button>(TestR.id.button_call)
+            buttonCall.performClick()
             val actual = shadowOf(RuntimeEnvironment.getApplication()).nextStartedActivity
-            assertEquals(Intent.ACTION_VIEW, actual.action)
-            assert(actual.data.toString().contains("facebook"))
+            assertEquals(Intent.ACTION_DIAL, actual.action)
+            assert(actual.data.toString().contains("tel:$phoneNumber"))
         }
     }
 }
