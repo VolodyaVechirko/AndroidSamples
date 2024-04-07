@@ -18,9 +18,6 @@ class EndlessListViewModel : ViewModel() {
     private val _state = MutableStateFlow(ScreenState())
     val state = _state.asStateFlow()
 
-    private val _isRefresh = MutableStateFlow(false)
-    val isRefresh = _isRefresh.asStateFlow()
-
     init {
         if (_state.value.items.isEmpty()) {
             getItems(page = 0)
@@ -35,32 +32,32 @@ class EndlessListViewModel : ViewModel() {
         Log.d("App", "getItems page $page")
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            val newItems = generateList(page)
-            _state.update {
-                it.copy(
-                    isLoading = false,
-                    items = if (page == 0) newItems else it.items + newItems,
-                    currentPage = page,
-                    isLastPage = newItems.isEmpty()
-                )
-            }
-
-            // error
-//            _state.update {
-//                it.copy(
-//                    error = "Some error occurred",
-//                    isLoading = false,
-//                )
-//            }
+            loadPage(page = page)
         }
     }
 
-    fun refresh() {
-        viewModelScope.launch {
-            _isRefresh.update { true }
-            getItems(page = 0)
-            _isRefresh.update { false }
+    private suspend fun loadPage(page: Int) {
+        val newItems = generateList(page)
+        _state.update {
+            it.copy(
+                isLoading = false,
+                items = if (page == 0) newItems else it.items + newItems,
+                currentPage = page,
+                isLastPage = newItems.isEmpty()
+            )
         }
+
+        // if error
+//        _state.update {
+//            it.copy(
+//                error = "Some error occurred",
+//                isLoading = false,
+//            )
+//        }
+    }
+
+    suspend fun refresh() {
+        loadPage(page = 0)
     }
 
     fun getMoreItems() {

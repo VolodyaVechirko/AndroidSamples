@@ -53,10 +53,10 @@ fun HomeScreen(
     photos: List<Photo> = getPhotos(LocalContext.current),
     onPostClicked: (String) -> Unit = { }
 ) {
-    val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 //    val tabItems = listOf(Icons.Filled.DateRange, Icons.Filled.AccountBox, Icons.Filled.Favorite)
     val tabItems = listOf("Grids", "Vertical", "Likes")
+    val pagerState = rememberPagerState(pageCount = { tabItems.size })
 
     Column(modifier = Modifier.fillMaxSize()) {
         TabRow(
@@ -87,7 +87,7 @@ fun HomeScreen(
         }
 
         Spacer(modifier = Modifier.height(4.dp))
-        HorizontalPager(pageCount = tabItems.size, state = pagerState) { page ->
+        HorizontalPager(state = pagerState) { page ->
             when (page) {
                 0 -> LazyVerticalGrid(columns = GridCells.Fixed(3)) {
                     items(photos) { photo ->
