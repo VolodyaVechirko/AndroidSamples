@@ -13,7 +13,6 @@ import androidx.navigation.navigation
 import com.vvechirko.nav_compose.BottomBarScreen
 import com.vvechirko.nav_compose.restartApp
 import com.vvechirko.nav_compose.screens.ScreenContent
-import com.vvechirko.nav_compose.screens.ScreenPager
 
 @Composable
 fun HomeNavGraph(navController: NavHostController, padding: PaddingValues) {
@@ -64,7 +63,7 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
             }
         }
         composable(route = DetailsScreen.Overview.route) {
-            ScreenPager(name = DetailsScreen.Overview.route) {
+            ScreenContent(name = DetailsScreen.Overview.route) {
                 navController.popBackStack(
                     route = DetailsScreen.Information.route,
                     inclusive = false
