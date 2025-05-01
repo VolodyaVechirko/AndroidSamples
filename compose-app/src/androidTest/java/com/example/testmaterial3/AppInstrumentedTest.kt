@@ -19,7 +19,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.isInternal
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import com.example.compose.MainActivity
 import org.hamcrest.Matchers.allOf
@@ -37,7 +36,7 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class AppInstrumentedTest {
 
     @get:Rule
     val grantPermissionRule: GrantPermissionRule =
@@ -66,18 +65,6 @@ class ExampleInstrumentedTest {
             .getLaunchIntentForPackage(appContext.packageName)
         appContext.startActivity(intent)
 
-        intended(hasComponent(MainActivity::class.java.name))
-    }
-
-    @JvmField
-    @Rule
-    val activityRule = ActivityTestRule(MainActivity::class.java, true, false)
-
-    @Test
-    fun useActivityRule() {
-        activityRule.launchActivity(null)
-
-        onView(withId(R.id.button_first)).perform(click())
         intended(hasComponent(MainActivity::class.java.name))
     }
 
@@ -119,5 +106,14 @@ class ExampleInstrumentedTest {
         }
         onView(withId(R.id.button_first)).perform(click())
         intended(hasComponent(MainActivity::class.java.name))
+    }
+
+    @Test
+    fun testLaunchTestActivity() {
+        ActivityScenario.launch(TestActivity::class.java).onActivity {
+
+        }
+        onView(withId(R.id.button_first)).perform(click())
+        intended(hasComponent(TestActivity::class.java.name))
     }
 }

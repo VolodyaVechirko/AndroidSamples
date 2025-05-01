@@ -4,11 +4,11 @@ object ChatData {
 
     fun getAll() = listOf(
         Message(
-            "Lexi",
+            "Anastasiia",
             "Test...Test...Test..."
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             """List of Android versions:
             |Android KitKat (API 19)
             |Android Lollipop (API 21)
@@ -21,51 +21,51 @@ object ChatData {
             |Android 12 (API 31)""".trim()
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             """I think Kotlin is my favorite programming language.
             |It's so much fun!""".trim()
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "Searching for alternatives to XML layouts..."
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             """Hey, take a look at Jetpack Compose, it's great!
             |It's the Android's modern toolkit for building native UI.
             |It simplifies and accelerates UI development on Android.
             |Less code, powerful tools, and intuitive Kotlin APIs :)""".trim()
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "It's available from API 21+ :)"
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "Writing Kotlin for UI seems so natural, Compose where have you been all my life?"
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "Android Studio next version's name is Arctic Fox"
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "Android Studio Arctic Fox tooling for Compose is top notch ^_^"
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "I didn't know you can now run the emulator directly from Android Studio"
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "Compose Previews are great to check quickly how a composable layout looks like"
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "Previews are also interactive after enabling the experimental setting"
         ),
         Message(
-            "Lexi",
+            "Anastasiia",
             "Have you tried writing build.gradle with KTS?"
         ),
     )

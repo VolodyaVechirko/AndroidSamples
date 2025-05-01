@@ -6,6 +6,7 @@
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
+/.idea/other.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
@@ -15,4 +16,7 @@
 local.properties
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/deploymentTargetDropDown.xml
+/.idea/deploymentTargetSelector.xml
 /.idea/androidTestResultsUserPreferences.xml
+/.idea/AndroidProjectSystem.xml
+/.idea/runConfigurations.xml
